@@ -2,7 +2,7 @@ import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit"
 
 export const OwnedObjects = () => {
   const account = useCurrentAccount();
-  const { data: response, error, isPending } = useSuiClientQuery(
+  const { data: response, isPending, } = useSuiClientQuery(
     "getOwnedObjects",
     {
       owner: account!.address
@@ -12,26 +12,15 @@ export const OwnedObjects = () => {
     }
   );
 
+  if (isPending) return <span className="text-2xl">Loading</span>
 
-  if (!account) return "Cannot retrieve the account";
-  if (error) return error.message;
-  if (isPending || !response) return <div>Loading...</div>;
+  // if (isError) return console.error("Error: ", error.message)
+
+  if (response) console.log('res ', response)
 
   return (
     <>
-      {response.data.length === 0 ? (
-        <p>No objects owned by connected wallet</p>
-      ) : (
-        <h2>Objects owned by wallet</h2>
-      )
-      }
-      <>
-        {/* {response.data.map(objectRes => (
-          <div key={objectRes.data?.objectId}>
-            <p>Object ID: {objectRes.data?.objectId}</p>
-          </div>
-      ))} */}
-      </>
+      <h2>Hello world</h2>
     </>
   )
 }

@@ -2,6 +2,8 @@ import './App.css'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import Footer from './components/Footer'
+import { OwnedObjects } from './components/OwnedObjects'
+
 
 function App() {
   return (
@@ -12,6 +14,7 @@ function App() {
       {/* Main */}
       <main className="flex-1 container mx-auto px-4 py-8">
         <Hero />
+        <OwnedObjects />
       </main>
 
       {/* Footer */}
