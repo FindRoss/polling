@@ -4,6 +4,7 @@ module polling::poll {
 // [address_or_package]::[module_name]::[item_name]
 use std::string::String;
 
+
 // === Errors ===
 
 // === Constants ===
@@ -19,8 +20,13 @@ public struct Poll has key {
 // === Events ===
 // === Method Aliases ===
 // === Public Functions ===
+#[allow(lint(public_entry))]
+public entry fun ping(_ctx: &mut TxContext) {
+  // no-op
+} 
 
-public fun create(
+#[allow(lint(public_entry))]
+public entry fun create(
   title: String, 
   description: String, 
   expiration: u64,
