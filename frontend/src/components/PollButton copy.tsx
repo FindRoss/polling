@@ -1,14 +1,15 @@
 import { useCurrentAccount, useSignAndExecuteTransaction } from '@mysten/dapp-kit';
 import { Transaction } from '@mysten/sui/transactions';
 import { useState } from 'react';
+import { useNetworkVariable } from '../config/networkConfig';
+
+// Get the package ID from the network config
+const PACKAGE_ID = useNetworkVariable("POLL_PACKAGE_ID");
+console.log("Using package ID:", PACKAGE_ID);
 
 // DONE: replace this with the package ID from your "sui client publish" output
-// const PACKAGE_ID = '0x91ddbc82d05c5ac86c4255c76c8a1355c6ca8817bc9fcf2af6350ad5a0c02e63';
-const PACKAGE_ID = '0xaef03190f20215aa0faf5aa641ac852db5f1d98be8eac8e6389e8177fb62a6b2';
+// const PACKAGE_ID = '0xaef03190f20215aa0faf5aa641ac852db5f1d98be8eac8e6389e8177fb62a6b2';
 
-
-// TODO: replace `poll` and `create_poll` with your actual module + function names
-const TARGET = `${PACKAGE_ID}::poll::ping`;
 
 const PollButton = () => {
   const account = useCurrentAccount();
@@ -31,15 +32,16 @@ const PollButton = () => {
     // Example: call an entry function that takes a string question
     //   public entry fun create_poll(question: vector<u8>, ctx: &mut TxContext)
     tx.moveCall({
-      target: TARGET,
-      arguments: [],
+      arguments: [
+        tx.pure.string('For For The People #1')
+      ],
+      target: `${PACKAGE_ID}::poll::create_poll`,
     });
 
     // 2. Ask the wallet to sign + execute it on testnet
     signAndExecuteTransaction(
       {
         transaction: tx,
-        // chain: 'sui:testnet', // optional; will use the default network from SuiClientProvider
       },
       {
         onSuccess: (result) => {

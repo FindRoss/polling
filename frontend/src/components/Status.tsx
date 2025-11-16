@@ -1,6 +1,5 @@
 import { useCurrentAccount } from "@mysten/dapp-kit"
 
-
 export const WalletStatus = () => {
   const account = useCurrentAccount();
 

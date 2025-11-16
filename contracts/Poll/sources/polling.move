@@ -4,7 +4,6 @@ module polling::poll {
 // [address_or_package]::[module_name]::[item_name]
 use std::string::String;
 
-
 // === Errors ===
 
 // === Constants ===
@@ -13,7 +12,9 @@ use std::string::String;
 public struct Poll has key {
   id: UID,
   title: String,
-  description: String,
+  subtitle: String,
+  from: address,
+  to: address,
   expiration: u64,
 }
 
@@ -26,25 +27,23 @@ public entry fun ping(_ctx: &mut TxContext) {
 } 
 
 #[allow(lint(public_entry))]
-public entry fun create(
-  title: String, 
-  description: String, 
-  expiration: u64,
+public entry fun create_poll(
+  title: String,
   ctx: &mut TxContext
-): ID {
-  
-  let poll: Poll = Poll {
+ ) {
+  let poll = Poll {
     id: object::new(ctx),
-    title, 
-    description, 
-    expiration
+    title,
+    subtitle: b"Hello world I am just testing.".to_string(),
+    from: @0x0,
+    to: @0x0,
+    expiration: 0,
   };
 
-  let id = poll.id.to_inner();
-  transfer::share_object(poll);
-
-  id
+  transfer::transfer(poll, ctx.sender());
 }
+
+
 
 
 // === View Functions ===
