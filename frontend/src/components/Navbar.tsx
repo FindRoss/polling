@@ -9,7 +9,23 @@ const Navbar = () => {
           <img src={wavescomp} className="w-8 h-8" />
           <span className="text-2xl font-bold">Polling</span>
         </div>
-        <ConnectButton />
+        <ConnectButton
+          className="
+            inline-flex
+            items-center
+            justify-center
+            px-6
+            py-3
+            rounded-lg
+            bg-blue-600
+            text-white
+            font-medium
+            shadow-md
+            hover:bg-blue-500
+            active:scale-95
+            transition-all
+            cursor-pointer
+         "/>
       </div>
     </header>
   )

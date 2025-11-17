@@ -4,9 +4,6 @@ import Hero from './components/Hero'
 import Footer from './components/Footer'
 import CreatePoll from './components/CreatePoll'
 
-// import { OwnedObjects } from './components/OwnedObjects'
-
-
 function App() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
