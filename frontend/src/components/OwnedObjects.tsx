@@ -21,13 +21,13 @@ const OwnedObjects = () => {
   if (response) console.log('res: ', response)
 
   return (
-    <div className="">
+    <>
       {response?.data?.map((obj) => (
-        <pre key={obj.data?.objectId} className="bg-slate-900 p-3 text-sm mt-4">
+        <pre key={obj.data?.objectId} className="bg-slate-900 px-3 py-5 text-sm mt-4 rounded-lg overflow-x-scroll">
           {JSON.stringify(obj, null, 2)}
         </pre>
       ))}
-    </div>
+    </>
   )
 }
 
