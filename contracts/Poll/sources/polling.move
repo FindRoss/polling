@@ -3,6 +3,8 @@ module polling::poll {
 // === Imports ===
 // [address_or_package]::[module_name]::[item_name]
 use std::string::String;
+use sui::event;
+use std::address;
 
 // === Errors ===
 
@@ -19,35 +21,38 @@ public struct Poll has key {
   expiration: u64,
 }
 
+public struct PollCreated has key, copy, drop {
+  id: UID, 
+  title: String, 
+  creator: address
+}
+
+// public struct PollCreated has key, drop {
+//   id: UID,
+// }
+
 // === Events ===
 // === Method Aliases ===
 // === Public Functions ===
-#[allow(lint(public_entry))]
-public entry fun ping(_ctx: &mut TxContext) {
-  // no-op
-} 
+public fun create_poll(title: String, ctx: &mut TxContext) {
+  let id = object::new(ctx);
 
-public fun create_poll(
-  title: String,
-  ctx: &mut TxContext
- ) {
-
-  transfer::share_object(Poll {
-    id: object::new(ctx),
+  let poll = Poll {
+    id,
     title,
-    subtitle: b"Hello world I am just testing.".to_string(),
+    subtitle: b"Return of the poll.".to_string(),
     from: @0x0,
     to: @0x0,
     value: 0,
     expiration: 0,
-  });
+  };
 
-  // transfer::transfer(poll, ctx.sender());
+  transfer::share_object(poll);
+
+  // emit event with the UID (or object id) so indexers can find it
+  event::emit(PollCreated { id, title, creator: ctx.sender() });
 }
 
-public fun increment(poll: &mut Poll) {
-  poll.value = poll.value + 1; 
-}
 
 
 // === View Functions ===
