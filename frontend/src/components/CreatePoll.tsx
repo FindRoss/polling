@@ -9,8 +9,6 @@ const CreatePoll = () => {
   const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
 
 
-  console.log('account', account);
-
   const handleClick = () => {
     if (!account) {
       alert('Please connect your wallet first.');
@@ -29,7 +27,7 @@ const CreatePoll = () => {
 
     signAndExecuteTransaction(
       { transaction: tx },
-      { onSuccess: (result) => console.log('executed transaction', result) }
+      { onSuccess: (result) => { console.log('executed transaction', result) } }
     );
 
     // Here you would build and send the transaction to create a poll
@@ -55,7 +53,7 @@ const CreatePoll = () => {
           active:scale-95
           transition-all
           cursor-pointer
-        ">Create Poll +
+        ">Create Poll
       </button>
     </div>
   );

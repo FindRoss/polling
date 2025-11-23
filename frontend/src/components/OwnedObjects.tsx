@@ -1,11 +1,13 @@
 import { useCurrentAccount, useSuiClientQuery } from "@mysten/dapp-kit"
 
-export const OwnedObjects = () => {
+const OwnedObjects = () => {
   const account = useCurrentAccount();
-  const { data: response, isPending, } = useSuiClientQuery(
+  console.log('account', account);
+
+  const { data: response, isError, isPending, } = useSuiClientQuery(
     "getOwnedObjects",
     {
-      owner: account!.address
+      owner: account!?.address
     },
     {
       enabled: !!account
@@ -14,13 +16,19 @@ export const OwnedObjects = () => {
 
   if (isPending) return <span className="text-2xl">Loading</span>
 
-  // if (isError) return console.error("Error: ", error.message)
+  if (isError) return console.error("Error: ")
 
-  if (response) console.log('res ', response)
+  if (response) console.log('res: ', response)
 
   return (
-    <>
-      <h2>Hello world</h2>
-    </>
+    <div className="">
+      {response?.data?.map((obj) => (
+        <pre key={obj.data?.objectId} className="bg-slate-900 p-3 text-sm mt-4">
+          {JSON.stringify(obj, null, 2)}
+        </pre>
+      ))}
+    </div>
   )
 }
+
+export default OwnedObjects;

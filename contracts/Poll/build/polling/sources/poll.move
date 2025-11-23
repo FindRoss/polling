@@ -15,6 +15,7 @@ public struct Poll has key {
   subtitle: String,
   from: address,
   to: address,
+  value: u64,
   expiration: u64,
 }
 
@@ -26,37 +27,37 @@ public entry fun ping(_ctx: &mut TxContext) {
   // no-op
 } 
 
-#[allow(lint(public_entry))]
-public entry fun create_poll(
+public fun create_poll(
   title: String,
   ctx: &mut TxContext
  ) {
-  let poll = Poll {
+
+  transfer::share_object(Poll {
     id: object::new(ctx),
     title,
     subtitle: b"Hello world I am just testing.".to_string(),
     from: @0x0,
     to: @0x0,
+    value: 0,
     expiration: 0,
-  };
+  });
 
-  transfer::transfer(poll, ctx.sender());
+  // transfer::transfer(poll, ctx.sender());
 }
 
-
+public fun increment(poll: &mut Poll) {
+  poll.value = poll.value + 1; 
+}
 
 
 // === View Functions ===
 
 // === Admin Functions ===
 
-
-
 // === Package Functions ===
 
 // === Private Functions ===
 
 // === Test Functions ===
-
 
 }
